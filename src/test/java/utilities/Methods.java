@@ -1,11 +1,14 @@
 package utilities;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.Select;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Methods {
@@ -44,13 +47,15 @@ public class Methods {
         Driver.getDriver().switchTo().window(tumWindowHandles.get(sayi));
     }
 
-    public static void selectOptionByTextUsingJS(String dropdownXPath, String optionText) {
-        // Dropdown menüsünü tıklayın
-        WebElement dropdown = Driver.getDriver().findElement(By.xpath(dropdownXPath));
-        dropdown.click();
-
-        // JavaScript ile seçeneğe tıklayın
-        WebElement option = Driver.getDriver().findElement(By.xpath("//li[contains(text(),'" + optionText + "')]"));
-        ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", option);
+    public static String tumSayfaResmi(String name) {
+        String tarih = new SimpleDateFormat("_hh_mm_ss_ddMMyyyy").format(new Date());
+        TakesScreenshot ts = (TakesScreenshot) Driver.getDriver();
+        String dosyaYolu = System.getProperty("user.dir") + "/target/Screenshots/" + name + tarih + ".png";
+        try {
+            FileUtils.copyFile(ts.getScreenshotAs(OutputType.FILE), new File(dosyaYolu));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return dosyaYolu;
     }
 }
