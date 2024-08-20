@@ -29,7 +29,7 @@ public class InsiderTest {
     public void Insider_Test (){
         extentReport = new ExtentReports();
         String tarih = new SimpleDateFormat("_hh_mm_ss_ddMMyyyy").format(new Date());
-        String dosyaYolu = "target/extentReport/report"+tarih+".html";
+        String dosyaYolu = "extentReport/report"+tarih+".html";
         extentHtmlReporter = new ExtentHtmlReporter(dosyaYolu);
         extentReport.attachReporter(extentHtmlReporter);
         extentReport.setSystemInfo("Tester","Dilek");
